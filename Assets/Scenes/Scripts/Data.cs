@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using UnityEngine;
 
@@ -83,7 +84,11 @@ namespace DataSpace
                 string[] lineData = line.Split('|');
                 Debug.Log("Data || Time: " + lineData[0] + " | Value: " + lineData[1]);
 
-                var dataPoint = (float.Parse(lineData[0]), float.Parse(lineData[1]));
+                // Ensure the data is correctly formatted with decimal points
+                float time = float.Parse(lineData[0], CultureInfo.InvariantCulture);
+                float value = float.Parse(lineData[1], CultureInfo.InvariantCulture);
+
+                (float, float) dataPoint = (time, value);
 
                 newData.Add(dataPoint);
             }
@@ -97,7 +102,8 @@ namespace DataSpace
 
             foreach (var point in data)
             {
-                newData += $"{point.Item1}|{point.Item2}\n";
+                newData +=
+                    $"{point.Item1.ToString(CultureInfo.InvariantCulture)}|{point.Item2.ToString(CultureInfo.InvariantCulture)}\n";
             }
 
             return newData;

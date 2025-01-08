@@ -414,7 +414,6 @@ public class Grid : MonoBehaviour
         if (!Keyframes.ContainsKey(data))
             return;
 
-        float offset = -5f;
         GameObject[] keys = Keyframes[data];
         int index = 0;
 
